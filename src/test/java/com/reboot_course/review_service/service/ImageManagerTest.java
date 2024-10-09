@@ -16,17 +16,17 @@ import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class ImageServiceTest {
+class ImageManagerTest {
 
-    private ImageService imageService;
+    private ImageManager imageManager;
 
     @TempDir
     Path tempDir;
 
     @BeforeEach
     void setUp() {
-        imageService = new ImageService();
-        ReflectionTestUtils.setField(imageService, "uploadDir", tempDir.toString());
+        imageManager = new ImageManager();
+        ReflectionTestUtils.setField(imageManager, "uploadDir", tempDir.toString());
     }
 
     @Test
@@ -36,7 +36,7 @@ class ImageServiceTest {
         MultipartFile file = new MockMultipartFile("test.jpg", "test.jpg", "image/jpeg", "test image content".getBytes());
 
         // When
-        String result = imageService.upload(file);
+        String result = imageManager.upload(file);
 
         // Then
         assertNotNull(result);
@@ -48,7 +48,7 @@ class ImageServiceTest {
     @DisplayName("성공 테스트: null 전달 시 null 저장")
     void t2() throws IOException {
         // When
-        String result = imageService.upload(null);
+        String result = imageManager.upload(null);
 
         // Then
         assertNull(result);
@@ -61,7 +61,7 @@ class ImageServiceTest {
         MultipartFile file = new MockMultipartFile("test.jpg", new byte[0]);
 
         // When
-        String result = imageService.upload(file);
+        String result = imageManager.upload(file);
 
         // Then
         assertNull(result);
@@ -72,11 +72,11 @@ class ImageServiceTest {
     void t4() throws IOException {
         // Given
         MultipartFile file = new MockMultipartFile("test.jpg", "test.jpg", "image/jpeg", "test image content".getBytes());
-        String uploadedFilePath = imageService.upload(file);
+        String uploadedFilePath = imageManager.upload(file);
         String filename = uploadedFilePath.substring(uploadedFilePath.lastIndexOf("/") + 1);
 
         // When
-        Resource resource = imageService.findOneByName(filename);
+        Resource resource = imageManager.findOneByName(filename);
 
         // Then
         assertTrue(resource.exists());
@@ -92,6 +92,6 @@ class ImageServiceTest {
         String nonExistingFilename = "non_existing.jpg";
 
         // When & Then
-        assertThrows(RuntimeException.class, () -> imageService.findOneByName(nonExistingFilename));
+        assertThrows(RuntimeException.class, () -> imageManager.findOneByName(nonExistingFilename));
     }
 }

@@ -4,46 +4,27 @@ import com.reboot_course.review_service.dto.request.ReviewCreateRequest;
 import com.reboot_course.review_service.entity.Product;
 import com.reboot_course.review_service.entity.Review;
 import com.reboot_course.review_service.entity.User;
-import com.reboot_course.review_service.repository.ProductRepository;
-import com.reboot_course.review_service.repository.ReviewRepository;
-import com.reboot_course.review_service.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
+import com.reboot_course.review_service.implement.product.ProductFinder;
+import com.reboot_course.review_service.implement.review.ReviewAppender;
+import com.reboot_course.review_service.implement.user.UserFinder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
-    private final UserRepository userRepository;
-    private final ProductRepository productRepository;
-    private final ReviewRepository reviewRepository;
-    private final ImageService imageService;
+    private final UserFinder userFinder;
+    private final ProductFinder productFinder;
+    private final ReviewAppender reviewAppender;
+    private final ImageManager imageManager;
 
-    @Transactional
-    public Long create(Long productId, ReviewCreateRequest request, MultipartFile image) throws IOException {
-        Review newReview = Review.builder()
-                .score(request.score())
-                .content(request.content())
-                .imageUrl(imageService.upload(image))
-                .product(fetchProduct(productId))
-                .user(fetchUser(request.userId()))
-                .build();
+    public Long create(Long productId, ReviewCreateRequest request, MultipartFile image) {
+        User user = userFinder.fetch(request.userId());
+        Product product = productFinder.fetch(productId);
+        String imageUrl = imageManager.upload(image);
+        Review review = reviewAppender.append(request, user, product, imageUrl);
 
-        reviewRepository.save(newReview);
-        return newReview.getId();
-    }
-
-    private Product fetchProduct(Long productId) {
-        return productRepository.findById(productId)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("상품(id : %d)을 찾을 수 없습니다.", productId)));
-    }
-
-    private User fetchUser(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("사용자(id : %d)를 찾을 수 없습니다.", userId)));
+        return review.getId();
     }
 }
