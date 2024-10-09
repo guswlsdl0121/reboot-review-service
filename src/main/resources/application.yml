@@ -10,5 +10,8 @@ spring:
       ddl-auto: validate
     open-in-view: false
 
+file:
+  upload-dir: ./images
+
 server:
   port: 8080
