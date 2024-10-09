@@ -34,6 +34,9 @@ dependencies {
 
 	// p6spy 세팅
 	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.1'
+
+	// validation을 위해 추가
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 tasks.named('test') {
