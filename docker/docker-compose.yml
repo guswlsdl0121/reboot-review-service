@@ -1,0 +1,34 @@
+services:
+  app:
+    container_name: app-1
+    volumes:
+      - ./build/libs:/app
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/review_service_db
+      SPRING_DATASOURCE_USERNAME: reboot
+      SPRING_DATASOURCE_PASSWORD: reboot1234
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: review_service_db
+      MYSQL_USER: reboot
+      MYSQL_PASSWORD: reboot1234
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    command:
+      - '--character-set-server=utf8mb4'
+      - '--collation-server=utf8mb4_unicode_ci'
+
+volumes:
+  mysql-data:
