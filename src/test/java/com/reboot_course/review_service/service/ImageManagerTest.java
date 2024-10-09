@@ -1,5 +1,6 @@
 package com.reboot_course.review_service.service;
 
+import com.reboot_course.review_service.infrastructure.image.ImageManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,10 +19,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ImageManagerTest {
 
-    private ImageManager imageManager;
-
     @TempDir
     Path tempDir;
+    private ImageManager imageManager;
 
     @BeforeEach
     void setUp() {
@@ -31,7 +31,7 @@ class ImageManagerTest {
 
     @Test
     @DisplayName("성공 테스트: 이미지 저장")
-    void t1() throws IOException {
+    void t1() {
         // Given
         MultipartFile file = new MockMultipartFile("test.jpg", "test.jpg", "image/jpeg", "test image content".getBytes());
 
@@ -46,7 +46,7 @@ class ImageManagerTest {
 
     @Test
     @DisplayName("성공 테스트: null 전달 시 null 저장")
-    void t2() throws IOException {
+    void t2() {
         // When
         String result = imageManager.upload(null);
 
@@ -56,7 +56,7 @@ class ImageManagerTest {
 
     @Test
     @DisplayName("성공 테스트: 빈 이미지 전달 시 빈 이미지 저장")
-    void t3() throws IOException {
+    void t3() {
         // Given
         MultipartFile file = new MockMultipartFile("test.jpg", new byte[0]);
 
