@@ -23,7 +23,7 @@ public class ReviewController {
             @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
 
         Long reviewId = reviewService.create(productId, request, image);
-
-        return ResponseEntity.created(URI.create("/products/" + productId + "/reviews/" + reviewId)).build();
+        URI resourceURI = URI.create("/products/" + productId + "/reviews/" + reviewId);
+        return ResponseEntity.created(resourceURI).build();
     }
 }

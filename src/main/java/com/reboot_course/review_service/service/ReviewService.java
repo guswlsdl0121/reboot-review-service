@@ -39,11 +39,11 @@ public class ReviewService {
 
     private Product fetchProduct(Long productId) {
         return productRepository.findById(productId)
-                .orElseThrow(() -> new EntityNotFoundException("상품을 찾을 수 없습니다."));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("상품(id : %d)을 찾을 수 없습니다.", productId)));
     }
 
     private User fetchUser(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("사용자(id : %d)를 찾을 수 없습니다.", userId)));
     }
 }
