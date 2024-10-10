@@ -18,4 +18,11 @@ public class Product {
 
     @Column(name = "score", nullable = false)
     private Float averageScore;
+
+    public void updateReviewCountAndScore(int score) {
+        float currentTotalScore = this.averageScore * this.reviewCount;
+        this.reviewCount++;
+        float newTotalScore = currentTotalScore + score;
+        this.averageScore = newTotalScore / this.reviewCount;
+    }
 }

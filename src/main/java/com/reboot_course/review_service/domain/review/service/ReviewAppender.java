@@ -22,6 +22,7 @@ public class ReviewAppender {
     public Review append(Long productId, ReviewCreateRequest request, String imageUrl) {
         User user = userFinder.fetch(request.userId());
         Product product = productFinder.fetch(productId);
+        product.updateReviewCountAndScore(request.score());
 
         Review review = Review.builder()
                 .user(user)
