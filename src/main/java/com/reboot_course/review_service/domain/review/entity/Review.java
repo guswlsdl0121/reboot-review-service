@@ -1,6 +1,7 @@
 package com.reboot_course.review_service.domain.review.entity;
 
 
+import com.reboot_course.review_service.common.constant.GlobalConstants;
 import com.reboot_course.review_service.domain.product.entity.Product;
 import com.reboot_course.review_service.domain.user.entity.User;
 import jakarta.persistence.*;
@@ -22,8 +23,8 @@ public class Review {
     private Long id;
 
     @Column(nullable = false, columnDefinition = "TINYINT")
-    @Min(0)
-    @Max(5)
+    @Min(GlobalConstants.MIN_SCORE)
+    @Max(GlobalConstants.MAX_SCORE)
     private Integer score;
 
     @Column(nullable = false, length = 1000)

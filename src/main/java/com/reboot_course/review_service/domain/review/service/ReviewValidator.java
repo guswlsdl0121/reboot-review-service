@@ -1,5 +1,6 @@
 package com.reboot_course.review_service.domain.review.service;
 
+import com.reboot_course.review_service.common.constant.GlobalConstants;
 import com.reboot_course.review_service.domain.review.dto.request.ReviewCreateRequest;
 import com.reboot_course.review_service.domain.review.exception.DuplicateReviewException;
 import com.reboot_course.review_service.domain.review.exception.InvalidScoreException;
@@ -26,7 +27,7 @@ public class ReviewValidator {
     }
 
     private void validateScoreRange(Integer score) {
-        if (score == null || score < 1 || score > 5) {
+        if (score == null || score < GlobalConstants.MIN_SCORE || score > GlobalConstants.MAX_SCORE) {
             throw new InvalidScoreException();
         }
     }

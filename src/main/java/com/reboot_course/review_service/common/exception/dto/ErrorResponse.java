@@ -1,6 +1,6 @@
-package com.reboot_course.review_service.common.dto;
+package com.reboot_course.review_service.common.exception.dto;
 
-import com.reboot_course.review_service.common.exception.ErrorCode;
+import com.reboot_course.review_service.common.constant.ErrorCode;
 
 import java.time.LocalDateTime;
 
