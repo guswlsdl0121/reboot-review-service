@@ -34,7 +34,7 @@ public class Review {
     private String imageUrl;
 
     @CreationTimestamp
-    @Column(columnDefinition = "TIMESTAMP(6)", nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     // 연관 관계
