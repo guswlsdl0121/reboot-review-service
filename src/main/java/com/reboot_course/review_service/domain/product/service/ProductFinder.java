@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
-public class ProductUpdater {
+public class ProductFinder {
     private final ProductRepository productRepository;
 
     @Transactional
-    public Product getOneAndUpdateStat(Long productId, int score) {
+    public Product fetchOneAndUpdateStat(Long productId, int score) {
         // 비관적 락을 사용하여 Product를 조회
         Product product = productRepository.findByIdWithPessimisticLock(productId)
                 .orElseThrow(() -> new ProductNotFoundException(productId));
@@ -23,5 +23,11 @@ public class ProductUpdater {
 
         // 업데이트된 Product를 저장
         return productRepository.save(product);
+    }
+
+    @Transactional(readOnly = true)
+    public Product fetchOne(Long productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException(productId));
     }
 }

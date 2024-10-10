@@ -5,6 +5,8 @@ import com.reboot_course.review_service.domain.review.dto.ReviewListResponse;
 import com.reboot_course.review_service.domain.review.entity.Review;
 import com.reboot_course.review_service.infrastructure.image.ImageManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class ReviewService {
     private final ReviewValidator reviewValidator;
     private final ReviewAppender reviewAppender;
+    private final ReviewReader reviewReader;
+
     private final ImageManager imageManager;
 
     public Long create(Long productId, ReviewCreateRequest request, MultipartFile image) {
@@ -24,6 +28,7 @@ public class ReviewService {
     }
 
     public ReviewListResponse readByPagination(Long productId, Long cursor, int size) {
-        return null;
+        Pageable pageable = PageRequest.of(0, size);
+        return reviewReader.readReviews(productId, cursor, pageable);
     }
 }

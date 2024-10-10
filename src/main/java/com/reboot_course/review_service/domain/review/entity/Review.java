@@ -34,7 +34,7 @@ public class Review {
     private String imageUrl;
 
     @CreationTimestamp
-    @Column(nullable = false, updatable = false)
+    @Column(columnDefinition = "TIMESTAMP(6)", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     // 연관 관계
@@ -45,4 +45,8 @@ public class Review {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
+
+    public Long getMemberId() {
+        return member.getId();
+    }
 }

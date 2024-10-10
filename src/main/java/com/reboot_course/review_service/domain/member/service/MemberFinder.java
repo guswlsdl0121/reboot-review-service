@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class MemberFinder {
     private final MemberRepository memberRepository;
 
-    public Member fetch(Long memberId) {
+    public Member fetchOne(Long memberId) {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new MemberNotFoundException(memberId));
     }

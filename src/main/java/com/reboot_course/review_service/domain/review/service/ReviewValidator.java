@@ -21,7 +21,7 @@ public class ReviewValidator {
     }
 
     private void validateUniqueReview(Long memberId, Long productId) {
-        if (reviewRepository.existsByMemberIdAndProductId(memberId, productId)) {
+        if (reviewRepository.existsByMember_IdAndProductId(memberId, productId)) {
             throw new DuplicateReviewException(memberId, productId);
         }
     }
