@@ -1,6 +1,7 @@
 package com.reboot_course.review_service.domain.review.service;
 
-import com.reboot_course.review_service.domain.review.dto.request.ReviewCreateRequest;
+import com.reboot_course.review_service.domain.review.dto.ReviewCreateRequest;
+import com.reboot_course.review_service.domain.review.dto.ReviewListResponse;
 import com.reboot_course.review_service.domain.review.entity.Review;
 import com.reboot_course.review_service.infrastructure.image.ImageManager;
 import lombok.RequiredArgsConstructor;
@@ -20,5 +21,9 @@ public class ReviewService {
         Review review = reviewAppender.append(productId, request, imageUrl);
 
         return review.getId();
+    }
+
+    public ReviewListResponse readByPagination(Long productId, Long cursor, int size) {
+        return null;
     }
 }
