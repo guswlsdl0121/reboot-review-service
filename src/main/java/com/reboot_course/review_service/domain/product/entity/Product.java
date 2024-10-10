@@ -19,9 +19,6 @@ public class Product {
     @Column(name = "score", nullable = false)
     private Float averageScore;
 
-    @Version
-    private int version;
-
     @Transient
     private Float totalScore;
 
