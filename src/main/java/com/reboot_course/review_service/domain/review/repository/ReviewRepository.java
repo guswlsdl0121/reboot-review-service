@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface ReviewRepository extends CrudRepository<Review, Long> {
-    boolean existsByUserIdAndProductId(Long userId, Long productId);
+    boolean existsByMemberIdAndProductId(Long memberId, Long productId);
     List<Review> findAllByProductId(Long productId);
 }

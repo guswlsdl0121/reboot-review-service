@@ -3,7 +3,7 @@ package com.reboot_course.review_service.domain.review.entity;
 
 import com.reboot_course.review_service.common.constant.GlobalConstants;
 import com.reboot_course.review_service.domain.product.entity.Product;
-import com.reboot_course.review_service.domain.user.entity.User;
+import com.reboot_course.review_service.domain.member.entity.Member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -43,6 +43,6 @@ public class Review {
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "member_id", nullable = false)
+    private Member member;
 }

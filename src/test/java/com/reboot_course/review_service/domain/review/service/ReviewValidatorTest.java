@@ -1,7 +1,7 @@
 package com.reboot_course.review_service.domain.review.service;
 
 import com.reboot_course.review_service.common.constant.GlobalConstants;
-import com.reboot_course.review_service.domain.review.dto.request.ReviewCreateRequest;
+import com.reboot_course.review_service.domain.review.dto.ReviewCreateRequest;
 import com.reboot_course.review_service.domain.review.exception.DuplicateReviewException;
 import com.reboot_course.review_service.domain.review.exception.InvalidScoreException;
 import com.reboot_course.review_service.domain.review.repository.ReviewRepository;
@@ -37,7 +37,7 @@ class ReviewValidatorTest {
     @Test
     @DisplayName("유효한 요청으로 검증 시 예외가 발생하지 않음")
     void t1() {
-        when(reviewRepository.existsByUserIdAndProductId(anyLong(), anyLong())).thenReturn(false);
+        when(reviewRepository.existsByMemberIdAndProductId(anyLong(), anyLong())).thenReturn(false);
 
         assertDoesNotThrow(() -> reviewValidator.validate(1L, validRequest));
     }
@@ -45,7 +45,7 @@ class ReviewValidatorTest {
     @Test
     @DisplayName("중복 리뷰 요청 시 DuplicateReviewException 발생")
     void t2() {
-        when(reviewRepository.existsByUserIdAndProductId(anyLong(), anyLong())).thenReturn(true);
+        when(reviewRepository.existsByMemberIdAndProductId(anyLong(), anyLong())).thenReturn(true);
 
         assertThrows(DuplicateReviewException.class, () -> reviewValidator.validate(1L, validRequest));
     }

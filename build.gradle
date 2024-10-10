@@ -29,14 +29,19 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
+	
+	// 테스트 관련 세팅
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testRuntimeOnly 'com.h2database:h2'
 
 	// p6spy 세팅
 	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.1'
 
 	// validation을 위해 추가
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	
 }
 
 tasks.named('test') {

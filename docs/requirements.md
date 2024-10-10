@@ -16,12 +16,12 @@
   - `productId`에 해당하는 `product`가 존재하지 않는다면, NotFound 반환 ✅
 
 
-- `user`는 하나의 `Product`에 대해 하나의 `review`만 작성할 수 있다.
-  - 만약 `user`가 한 `product`에 중복 리뷰를 작성하려고 하면 Conflicit 반환 ✅
+- `member`는 하나의 `Product`에 대해 하나의 `review`만 작성할 수 있다.
+  - 만약 `member`가 한 `product`에 중복 리뷰를 작성하려고 하면 Conflicit 반환 ✅
   - 추가적으로, 따닥 요청 막기 구현 필요 -> 일단 나중에 하자.. 조회 얼른 만들어야 됨.
 
 
-- `user`는 `review`를 달 떄 1~5점 사이의 `score`를 남길 수 있다. ✅
+- `member`는 `review`를 달 떄 1~5점 사이의 `score`를 남길 수 있다. ✅
   - 만약 점수 범위를 초과한다면, BadRequest 반환 ✅
 
 
@@ -42,6 +42,7 @@
 - **많은 유저들이 동시에 리뷰를 작성할 떄 발생할 수 있는 문제** 고려 (동시성 문제)
   - 여러 사용자가 같은 상품에 대해 동시에 리뷰 작성할 때 오류 발생 (reviewCount, score에 대해 race condition 생김)
   - 이를 해결하기 위해, 비관적 락 사용
+
 
 - 테스트 코드 작성
 

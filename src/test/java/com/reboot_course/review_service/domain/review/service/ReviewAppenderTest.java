@@ -2,11 +2,11 @@ package com.reboot_course.review_service.domain.review.service;
 
 import com.reboot_course.review_service.domain.product.entity.Product;
 import com.reboot_course.review_service.domain.product.repository.ProductRepository;
-import com.reboot_course.review_service.domain.review.dto.request.ReviewCreateRequest;
+import com.reboot_course.review_service.domain.review.dto.ReviewCreateRequest;
 import com.reboot_course.review_service.domain.review.entity.Review;
 import com.reboot_course.review_service.domain.review.repository.ReviewRepository;
-import com.reboot_course.review_service.domain.user.entity.User;
-import com.reboot_course.review_service.domain.user.repository.UserRepository;
+import com.reboot_course.review_service.domain.member.entity.Member;
+import com.reboot_course.review_service.domain.member.repository.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -37,7 +37,7 @@ class ReviewAppenderTest {
     private ProductRepository productRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private MemberRepository memberRepository;
 
     private Long productId;
     private List<Long> userIds;
@@ -45,8 +45,8 @@ class ReviewAppenderTest {
     @BeforeEach
     void setUp() {
         userIds = IntStream.range(0, 5)
-                .mapToObj(i -> userRepository.save(new User()))
-                .map(User::getId)
+                .mapToObj(i -> memberRepository.save(new Member()))
+                .map(Member::getId)
                 .toList();
 
         Product product = productRepository.save(Product.builder()
@@ -84,7 +84,8 @@ class ReviewAppenderTest {
         for (int i = 0; i < reviewDataList.size(); i++) {
             Review review = productReviews.get(i);
             ReviewTestData data = reviewDataList.get(i);
-            assertEquals(userIds.get(i), review.getUser().getId());
+
+            assertEquals(userIds.get(i), review.getMember().getId());
             assertEquals(productId, review.getProduct().getId());
             assertEquals(data.score(), review.getScore());
             assertEquals(data.content(), review.getContent());

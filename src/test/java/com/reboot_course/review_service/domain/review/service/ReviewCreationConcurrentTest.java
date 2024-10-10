@@ -2,9 +2,9 @@ package com.reboot_course.review_service.domain.review.service;
 
 import com.reboot_course.review_service.domain.product.entity.Product;
 import com.reboot_course.review_service.domain.product.repository.ProductRepository;
-import com.reboot_course.review_service.domain.review.dto.request.ReviewCreateRequest;
-import com.reboot_course.review_service.domain.user.entity.User;
-import com.reboot_course.review_service.domain.user.repository.UserRepository;
+import com.reboot_course.review_service.domain.review.dto.ReviewCreateRequest;
+import com.reboot_course.review_service.domain.member.entity.Member;
+import com.reboot_course.review_service.domain.member.repository.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @ActiveProfiles("test")
 public class ReviewCreationConcurrentTest {
-
     @Autowired
     private ReviewService reviewService;
 
@@ -31,10 +30,10 @@ public class ReviewCreationConcurrentTest {
     private ProductRepository productRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private MemberRepository memberRepository;
 
     private Product testProduct;
-    private List<User> testUsers;
+    private List<Member> testMembers;
 
     @BeforeEach
     public void setup() {
@@ -43,9 +42,9 @@ public class ReviewCreationConcurrentTest {
                 .averageScore(0.0f)
                 .build());
 
-        testUsers = new ArrayList<>();
+        testMembers = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            testUsers.add(userRepository.save(new User()));
+            testMembers.add(memberRepository.save(new Member()));
         }
     }
 
@@ -61,7 +60,7 @@ public class ReviewCreationConcurrentTest {
             executorService.submit(() -> {
                 try {
                     ReviewCreateRequest request = new ReviewCreateRequest(
-                            testUsers.get(finalI).getId(),
+                            testMembers.get(finalI).getId(),
                             5,
                             "Great product!");
                     reviewService.create(testProduct.getId(), request, null);
@@ -71,7 +70,8 @@ public class ReviewCreationConcurrentTest {
             });
         }
 
-        latch.await(); // 모든 스레드가 완료될 때까지 대기
+        // 모든 스레드가 완료될 때까지 대기
+        latch.await();
 
         // 데이터베이스에서 최신 상태의 Product를 가져옴
         Product updatedProduct = productRepository.findById(testProduct.getId()).orElseThrow();
