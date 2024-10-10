@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,6 @@ public class ReviewCreationConcurrentTest {
     private List<User> testUsers;
 
     @BeforeEach
-    @Transactional
     public void setup() {
         testProduct = productRepository.save(Product.builder()
                 .reviewCount(0L)

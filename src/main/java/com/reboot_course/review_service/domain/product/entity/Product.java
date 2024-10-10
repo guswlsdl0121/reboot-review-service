@@ -19,10 +19,21 @@ public class Product {
     @Column(name = "score", nullable = false)
     private Float averageScore;
 
-    public void updateReviewCountAndScore(int score) {
-        float currentTotalScore = this.averageScore * this.reviewCount;
+    @Version
+    private int version;
+
+    @Transient
+    private Float totalScore;
+
+    @PostLoad
+    private void calculateTotalScore() {
+        this.totalScore = this.averageScore * this.reviewCount;
+    }
+
+    public void updateStat(int score) {
+        this.totalScore = (this.totalScore == null) ? 0 : this.totalScore;
+        this.totalScore += score;
         this.reviewCount++;
-        float newTotalScore = currentTotalScore + score;
-        this.averageScore = newTotalScore / this.reviewCount;
+        this.averageScore = this.totalScore / this.reviewCount;
     }
 }

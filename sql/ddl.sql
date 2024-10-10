@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS `product`
 (
     `id`           BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `review_count` BIGINT(20) NOT NULL,
-    `score`        FLOAT      NOT NULL
+    `score`        FLOAT      NOT NULL,
+    `version`      INT NOT NULL DEFAULT 0
 ) ENGINE = InnoDB
   CHARSET = utf8;
 

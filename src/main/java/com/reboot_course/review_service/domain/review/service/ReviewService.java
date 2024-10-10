@@ -16,7 +16,6 @@ public class ReviewService {
 
     public Long create(Long productId, ReviewCreateRequest request, MultipartFile image) {
         reviewValidator.validate(productId, request);
-
         String imageUrl = imageManager.upload(image);
         Review review = reviewAppender.append(productId, request, imageUrl);
 
