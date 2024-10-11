@@ -29,3 +29,5 @@ WHERE product_id = 1
   AND created_at < '2024-10-11 06:50:26.370'
 ORDER BY created_at DESC
 LIMIT 10;
+
+UPDATE product SET version = 0 WHERE version IS NULL;

@@ -20,7 +20,7 @@ public class Product {
     private Float averageScore;
 
     @Version
-    private Long version;
+    private Long version = 0L;
 
     public void updateStat(int score) {
         float totalScore = this.averageScore * this.reviewCount;
