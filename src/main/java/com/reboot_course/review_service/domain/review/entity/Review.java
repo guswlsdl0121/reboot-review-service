@@ -13,11 +13,16 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(indexes = {
-        @Index(name = "idx_product_created_at", columnList = "product_id, created_at"),
-        @Index(name = "idx_product_id", columnList = "product_id"),
-        @Index(name = "idx_member_product", columnList = "member_id, product_id")
-})
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uq_member_product", columnNames = {"member_id", "product_id"})
+        },
+        indexes = {
+                @Index(name = "idx_product_created_at", columnList = "product_id, created_at"),
+                @Index(name = "idx_product_id", columnList = "product_id"),
+                @Index(name = "idx_member_product", columnList = "member_id, product_id")
+        }
+)
 @Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

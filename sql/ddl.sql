@@ -31,9 +31,12 @@ CREATE TABLE IF NOT EXISTS `review`
     `content`    VARCHAR(1000) NOT NULL,
     `image_url`  VARCHAR(255),
     PRIMARY KEY (`id`),
+    CONSTRAINT `uq_member_product` UNIQUE (`member_id`, `product_id`),
+    CONSTRAINT `ck_score` CHECK (`score` >= 1 AND `score` <= 5),
     INDEX `idx_product_created_at` (`product_id`, `created_at`),
     INDEX `idx_product_id` (`product_id`),
-    CONSTRAINT `FK_review_member` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`),
-    CONSTRAINT `FK_review_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+    INDEX `idx_member_product` (`member_id`, `product_id`),
+    CONSTRAINT `FK_review_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+    CONSTRAINT `FK_review_member` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`)
 ) ENGINE = InnoDB
   CHARSET = utf8;
