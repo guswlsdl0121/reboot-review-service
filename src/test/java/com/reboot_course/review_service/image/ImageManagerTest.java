@@ -1,4 +1,4 @@
-package com.reboot_course.review_service.service;
+package com.reboot_course.review_service.image;
 
 import com.reboot_course.review_service.infrastructure.image.ImageManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +30,7 @@ class ImageManagerTest {
     }
 
     @Test
-    @DisplayName("성공 테스트: 이미지 저장")
+    @DisplayName("이미지 업로드 시 올바른 경로와 확장자를 가진 파일명이 반환되어야 한다")
     void t1() {
         // Given
         MultipartFile file = new MockMultipartFile("test.jpg", "test.jpg", "image/jpeg", "test image content".getBytes());
@@ -45,7 +45,7 @@ class ImageManagerTest {
     }
 
     @Test
-    @DisplayName("성공 테스트: null 전달 시 null 저장")
+    @DisplayName("null 파일 업로드 시 null이 반환되어야 한다")
     void t2() {
         // When
         String result = imageManager.upload(null);
@@ -55,7 +55,7 @@ class ImageManagerTest {
     }
 
     @Test
-    @DisplayName("성공 테스트: 빈 이미지 전달 시 빈 이미지 저장")
+    @DisplayName("빈 이미지 파일 업로드 시 null이 반환되어야 한다")
     void t3() {
         // Given
         MultipartFile file = new MockMultipartFile("test.jpg", new byte[0]);
@@ -68,7 +68,7 @@ class ImageManagerTest {
     }
 
     @Test
-    @DisplayName("성공 테스트: 이미지 저장 후 파일 이름으로 조회")
+    @DisplayName("업로드된 이미지 파일을 이름으로 조회 시 해당 파일의 Resource가 반환되어야 한다")
     void t4() throws IOException {
         // Given
         MultipartFile file = new MockMultipartFile("test.jpg", "test.jpg", "image/jpeg", "test image content".getBytes());
@@ -86,7 +86,7 @@ class ImageManagerTest {
     }
 
     @Test
-    @DisplayName("실패 테스트: 존재하지 않는 이름으로 찾으려 할 때 오류 발생")
+    @DisplayName("존재하지 않는 이미지 파일명으로 조회 시 RuntimeException이 발생해야 한다")
     void t5() {
         // Given
         String nonExistingFilename = "non_existing.jpg";
