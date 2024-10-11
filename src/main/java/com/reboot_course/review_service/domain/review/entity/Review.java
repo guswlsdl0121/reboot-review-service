@@ -2,8 +2,8 @@ package com.reboot_course.review_service.domain.review.entity;
 
 
 import com.reboot_course.review_service.common.constant.GlobalConstants;
-import com.reboot_course.review_service.domain.product.entity.Product;
 import com.reboot_course.review_service.domain.member.entity.Member;
+import com.reboot_course.review_service.domain.product.entity.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

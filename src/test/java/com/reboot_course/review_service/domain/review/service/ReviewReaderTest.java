@@ -85,7 +85,7 @@ class ReviewReaderTest {
             ReviewListResponse response = reviewReader.readReviews(productId, cursor, pageable);
 
             System.out.println("======================");
-            response.reviews().forEach(r-> System.out.println(r.createdAt()));
+            response.reviews().forEach(r -> System.out.println(r.createdAt()));
             System.out.println("======================");
 
             assertEquals(50, response.totalCount());

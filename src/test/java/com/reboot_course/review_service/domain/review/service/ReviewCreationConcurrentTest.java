@@ -1,10 +1,10 @@
 package com.reboot_course.review_service.domain.review.service;
 
+import com.reboot_course.review_service.domain.member.entity.Member;
+import com.reboot_course.review_service.domain.member.repository.MemberRepository;
 import com.reboot_course.review_service.domain.product.entity.Product;
 import com.reboot_course.review_service.domain.product.repository.ProductRepository;
 import com.reboot_course.review_service.domain.review.dto.ReviewCreateRequest;
-import com.reboot_course.review_service.domain.member.entity.Member;
-import com.reboot_course.review_service.domain.member.repository.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

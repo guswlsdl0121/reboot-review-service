@@ -1,12 +1,12 @@
 package com.reboot_course.review_service.domain.review.service;
 
+import com.reboot_course.review_service.domain.member.entity.Member;
+import com.reboot_course.review_service.domain.member.repository.MemberRepository;
 import com.reboot_course.review_service.domain.product.entity.Product;
 import com.reboot_course.review_service.domain.product.repository.ProductRepository;
 import com.reboot_course.review_service.domain.review.dto.ReviewCreateRequest;
 import com.reboot_course.review_service.domain.review.entity.Review;
 import com.reboot_course.review_service.domain.review.repository.ReviewRepository;
-import com.reboot_course.review_service.domain.member.entity.Member;
-import com.reboot_course.review_service.domain.member.repository.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -41,6 +41,18 @@ class ReviewAppenderTest {
 
     private Long productId;
     private List<Long> userIds;
+
+    static Stream<List<ReviewTestData>> reviewDataProvider() {
+        return Stream.of(
+                List.of(
+                        new ReviewTestData(5, "Great product!", "/images/review1.jpg"),
+                        new ReviewTestData(4, "Good product", ""),
+                        new ReviewTestData(3, "Average product", "/images/review2.jpg"),
+                        new ReviewTestData(2, "Not so good", ""),
+                        new ReviewTestData(1, "Bad product", "/images/review3.jpg")
+                )
+        );
+    }
 
     @BeforeEach
     void setUp() {
@@ -93,17 +105,6 @@ class ReviewAppenderTest {
         }
     }
 
-    static Stream<List<ReviewTestData>> reviewDataProvider() {
-        return Stream.of(
-                List.of(
-                        new ReviewTestData(5, "Great product!", "/images/review1.jpg"),
-                        new ReviewTestData(4, "Good product", ""),
-                        new ReviewTestData(3, "Average product", "/images/review2.jpg"),
-                        new ReviewTestData(2, "Not so good", ""),
-                        new ReviewTestData(1, "Bad product", "/images/review3.jpg")
-                )
-        );
+    record ReviewTestData(int score, String content, String imageUrl) {
     }
-
-    record ReviewTestData(int score, String content, String imageUrl) {}
 }

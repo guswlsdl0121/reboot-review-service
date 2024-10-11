@@ -9,4 +9,5 @@ public record ReviewResponse(
         String content,
         String imageUrl,
         LocalDateTime createdAt
-) {}
+) {
+}

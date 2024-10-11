@@ -7,4 +7,5 @@ public record ReviewListResponse(
         float score,
         Long cursor,
         List<ReviewResponse> reviews
-) {}
+) {
+}
