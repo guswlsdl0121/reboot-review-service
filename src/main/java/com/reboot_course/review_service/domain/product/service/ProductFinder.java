@@ -4,6 +4,9 @@ import com.reboot_course.review_service.domain.product.entity.Product;
 import com.reboot_course.review_service.domain.product.exception.ProductNotFoundException;
 import com.reboot_course.review_service.domain.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,15 +16,16 @@ public class ProductFinder {
     private final ProductRepository productRepository;
 
     @Transactional
+    @Retryable(
+            retryFor = {ObjectOptimisticLockingFailureException.class},
+            maxAttempts = 10,
+            backoff = @Backoff(delay = 10, multiplier = 2, maxDelay = 100)
+    )
     public Product fetchOneAndUpdateStat(Long productId, int score) {
-        // 비관적 락을 사용하여 Product를 조회
-        Product product = productRepository.findByIdWithPessimisticLock(productId)
+        Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ProductNotFoundException(productId));
 
-        // Product의 상태를 업데이트
         product.updateStat(score);
-
-        // 업데이트된 Product를 저장
         return productRepository.save(product);
     }
 

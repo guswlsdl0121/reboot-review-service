@@ -19,6 +19,9 @@ public class Product {
     @Column(name = "score", nullable = false)
     private Float averageScore;
 
+    @Version
+    private Long version;
+
     public void updateStat(int score) {
         float totalScore = this.averageScore * this.reviewCount;
         totalScore += score;
